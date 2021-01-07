@@ -40,8 +40,7 @@ name=$1
 print "- Name : $name"
 del $base2/download
 test ! -d $base2/download && mkdir -p $base2/download
-#$bin2/curl -L -o $base2/download/$name.tar.xz $url 2>/dev/null & spinner "- Downloading" 2>/dev/null
-cp -pf /sdcard/$name.tar.xz $base2/download/$name.tar.xz
+$bin2/curl -L -o $base2/download/$name.tar.xz $url 2>/dev/null & spinner "- Downloading" 2>/dev/null
 print
 print "- Size : $(du -sh $base2/download/$name.tar.xz | cut -f1)"
 print "- Extracting"
