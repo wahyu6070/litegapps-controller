@@ -742,7 +742,7 @@ print "1.Boost              6.Memory Info"
 print "2.Gaming Mode        7.Device Info"
 print "${batterystatus}8.Add on"
 print "4.Check Ping         9.About"
-print "${YELLOW}5.Litegapps Menu${GREEN}       10.Exit"
+print "${YELLOW}5.Litegapps Menu${GREEN}     10.Exit"
 print
 echo -n "Choose one of the numbers : "
 read pilih
