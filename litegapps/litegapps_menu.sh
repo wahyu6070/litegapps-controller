@@ -4,22 +4,12 @@
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 #29-12-2020
-litegapps_menu_version=1.0
-litegapps_menu_code=1
-
+litegapps_menu_version=1.1
+litegapps_menu_code=2
+#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+#base func
+#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 getp5(){ grep "^$1" "$2" | head -n1 | cut -d = -f 2; }
-test -f /system_root/system/build.prop && SYSDIR=/system_root/system || test -f /system/system/build.prop && SYSDIR=/system/system || SYSDIR=/system
-findarch=$(getp5 ro.product.cpu.abi $SYSDIR/build.prop | cut -d '-' -f -1)
-SDK=$(getp5 ro.build.version.sdk $SYSDIR/build.prop)
-case $findarch in
-arm64) ARCH=arm64 ;;
-armeabi) ARCH=arm ;;
-x86) ARCH=x86 ;;
-x86_64) ARCH=x86_64 ;;
-*) abort " <$findarch> Your Architecture Not Support" ;;
-esac
-
-
 spinner() {
   set +x
   PID=$!
@@ -31,7 +21,26 @@ spinner() {
   done
   set -x 2>>$VERLOG
 }
+#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+#dec
+#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+test -f /system_root/system/build.prop && SYSDIR=/system_root/system || test -f /system/system/build.prop && SYSDIR=/system/system || SYSDIR=/system
+findarch=$(getp5 ro.product.cpu.abi $SYSDIR/build.prop | cut -d '-' -f -1)
+SDK=$(getp5 ro.build.version.sdk $SYSDIR/build.prop)
+case $findarch in
+arm64) ARCH=arm64 ;;
+armeabi) ARCH=arm ;;
+x86) ARCH=x86 ;;
+x86_64) ARCH=x86_64 ;;
+*) abort " <$findarch> Your Architecture Not Support" ;;
+esac
 
+#system
+system=/system
+
+#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+#main func
+#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 download_file(){
 clear
 print "             Download Files"
@@ -110,7 +119,7 @@ esac
 download_menu(){
 	while true; do
 	clear
-	print "      Download list"
+	printmid "Download list"
 	print
 	print "1.Wellbeing"
 	print "2.Youtube Vanced"
@@ -127,7 +136,7 @@ download_menu(){
 	download_file Youtube https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/YoutubeVanced.tar.xz/download
 	;;
 	3)
-	echo
+	download_file SoundPicker https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/SoundPicker.tar.xz/download
 	;;
 	4)
 	clear
@@ -153,12 +162,57 @@ download_menu(){
 	done
 	
 	}
+tweaks(){
+	while true; do
+	clear
+	printmid "${CYAN}Litegapps Tweaks"
+	print
+	print " 1. Fix Permissions"
+	print " 2. Back"
+	print
+	echo -n "Select Menu : "
+	read perm33
+	case $perm33 in
+		1)
+			clear
+			printmid "Fix Permissions"
+			print
+			for iz in $SYSDIR/app $SYSDIR $SYSDIR/product/app $SYSDIR/product/priv-app; do
+				if [ -d $iz ]; then
+				 	find $iz -type f -name *.apk | while read asww; do
+				 		print "${CYAN}set permissions $asww"
+				 		chmod 644 $asww
+				 		chcon -h u:object_r:system_file:s0 $asww
+				 		print "${GREEN}set permission $(dirname $asww)"
+				 		chmod 755 $(dirname $asww)
+				 		chcon -h u:object_r:system_file:s0 $(dirname $asww)
+				 	done
+				fi
+		     done
+				
+				print 
+				print "1.Back"
+				print
+				echo -n "select menu : "
+				read lul
+			;;
+		2)
+		break
+			;;
+		*)
+			error "please select menu"
+			sleep 2s
+			;;
+	esac
+	
+   done
+	
 
-
+}
 while true; do
 clear
 print
-printmid "Litegapps Menu"
+printmid "${CYAN}Litegapps Menu${GREEN}"
 print
 print "1.Download package"
 print "2.Tweaks"
@@ -173,7 +227,7 @@ read menu77
 		download_menu
 		;;
 		2)
-		echo
+		tweaks
 		;;
 		3)
 		chmod 755 /data/litegapps/updater.sh
@@ -181,8 +235,9 @@ read menu77
 		;;
 		4)
 		clear
-		printmid "About Litegapps Menu"
+		printmid "${CYAN}About Litegapps Menu"
 		print
+		print "Litegapps Menu Version : $litegapps_menu_version ($litegapps_menu_code)"
 		print "Litegapps Menu is an additional feature of Litegapps or Litegapps++"
 		print " "
 		print "telegram channel : https://t.me/litegapps"
