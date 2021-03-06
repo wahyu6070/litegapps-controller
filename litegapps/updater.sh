@@ -1,7 +1,7 @@
 #litegapps control
-#29-12-2020
-updaterversion=1.0
-updatercode=1
+#29-12-2020 - 06-03-2021
+updaterversion=1.1
+updatercode=2
 based=/data/litegapps
 bins=$based/bin
 
@@ -14,9 +14,10 @@ clear
 printmid "Litegapps Menu Updater"
 print
 print "- Checking Litegapps Menu"
-$bins/curl -L -o $based/download/litegapps_menu https://raw.githubusercontent.com/wahyu6070/litegapps_control/master/litegapps/litegapps_menu.sh 2>/dev/null
+test ! -d $based/download && mkdir -p $based/download
+$bins/curl -L -o $based/download/litegapps_menu https://raw.githubusercontent.com/wahyu6070/litegapps-controller/master/litegapps/litegapps_menu.sh 2>/dev/null
 if [ $(getp litegapps_menu_code $based/download/litegapps_menu) -gt $(getp litegapps_menu_code $based/litegapps_menu.sh) ]; then
-print
+print " "
 print "  Litegapps Menu Latest version is available ! : "
 print "  Old Version : $(getp litegapps_menu_version $based/litegapps_menu.sh)"
 print "  New Version : $(getp litegapps_menu_version $based/download/litegapps_menu)"
@@ -30,11 +31,11 @@ elif [ $(getp litegapps_menu_code $based/download/litegapps_menu) -eq $(getp lit
 print "  Litegapps Menu version is up to date !"
 print "  Litegapps Menu Version : $(getp litegapps_menu_version $based/litegapps_menu.sh)"
 fi
-del $based/download/litegapps_menu
+#del $based/download/litegapps_menu
 
 
 print "- Checking Updater"
-$bins/curl -L -o $based/download/updater https://raw.githubusercontent.com/wahyu6070/litegapps_control/master/litegapps/updater.sh 2>/dev/null
+$bins/curl -L -o $based/download/updater https://raw.githubusercontent.com/wahyu6070/litegapps-controller/master/litegapps/updater.sh 2>/dev/null
 if [ $(getp updatercode $based/download/updater) -gt $(getp updatercode $based/updater.sh) ]; then
 print
 print "  Updater Latest version is available ! : "
