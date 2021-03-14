@@ -83,6 +83,7 @@ install_package(){
 	for move_package in litegapps-prop litegapps-list litegapps-uninstall.sh module.prop; do
 		[ -f $base/tmp/$move_package ] && cp -pf $base/tmp/$move_package $base/modules/$name_package_module/
 	done
+	rm -rf $base/tmp
 	}
 	
 	
@@ -125,8 +126,8 @@ print
 [ -d $base2/download ] && rm -rf $base2/download
 test ! -d $base2/download && mkdir -p $base2/download
 print "- Download package"
-cp -pf /sdcard/asw/package/package.zip $base2/download/$name.zip
-#$bin2/curl -L -o $base2/download/$name.zip $url 2>/dev/null & spinner "- Downloading" 2>/dev/null
+#cp -pf /sdcard/asw/package/package.zip $base2/download/$name.zip
+$bin2/curl -L -o $base2/download/$name.zip $url 2>/dev/null & spinner "- Downloading" 2>/dev/null
 ZIP_TEST="$(file -b $base2/download/$name.zip | head -1 | cut -d , -f 1)"
 case "$ZIP_TEST" in
     "Zip archive data") 
@@ -145,8 +146,13 @@ case "$ZIP_TEST" in
 esac
 
 install_package $base2/download/$name.zip
-
-
+rm -rf $base/download
+elif [ "$modeselect" = "uninstall" ]; then 
+printmid "${C}Uninstall Packages${G}"
+print
+[ -f $base/modules/$name/litegapps-uninstall.sh ] && chmod 755 $base/modules/$name/litegapps-uninstall.sh && . $base/modules/$name/litegapps-uninstall.sh
+[ -d $base/modules/$name ] && rm -rf $base/modules/$name
+print
 fi
 
 print "1.Back"
