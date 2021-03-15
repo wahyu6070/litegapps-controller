@@ -3,7 +3,7 @@
 #Litegapps
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#29-12-2020
+#29-12-2020 15-03-2021
 litegapps_menu_version=1.1
 litegapps_menu_code=2
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
@@ -138,16 +138,17 @@ case "$ZIP_TEST" in
     print " "
     print "${G}* Tips"
     print " "
-    print "Please check your internet connection and try again${W}"
+    print " Please check your internet connection and try again${W}"
     print
-    sleep 4s
+    6s
     return 1
     ;;
 esac
 
 install_package $base2/download/$name.zip
 rm -rf $base/download
-elif [ "$modeselect" = "uninstall" ]; then 
+elif [ "$modeselect" = "uninstall" ]; then
+clear
 printmid "${C}Uninstall Packages${G}"
 print
 [ -f $base/modules/$name/litegapps-uninstall.sh ] && chmod 755 $base/modules/$name/litegapps-uninstall.sh && . $base/modules/$name/litegapps-uninstall.sh
@@ -157,7 +158,7 @@ fi
 
 print "1.Back"
 print
-echo -n "menu : "
+echo -n " Select menu : "
 read abc
 }
 download_menu(){
