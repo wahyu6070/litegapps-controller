@@ -3,7 +3,7 @@
 #Litegapps
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#29-12-2020 15-03-2021
+#29-12-2020 16-03-2021
 litegapps_menu_version=1.1
 litegapps_menu_code=2
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
@@ -126,8 +126,8 @@ print
 [ -d $base2/download ] && rm -rf $base2/download
 test ! -d $base2/download && mkdir -p $base2/download
 print "- Download package"
-#cp -pf /sdcard/asw/package/package.zip $base2/download/$name.zip
-$bin2/curl -L -o $base2/download/$name.zip $url 2>/dev/null & spinner "- Downloading" 2>/dev/null
+cp -pf /sdcard/asw/package/package.zip $base2/download/$name.zip
+#$bin2/curl -L -o $base2/download/$name.zip $url 2>/dev/null & spinner "- Downloading" 2>/dev/null
 ZIP_TEST="$(file -b $base2/download/$name.zip | head -1 | cut -d , -f 1)"
 case "$ZIP_TEST" in
     "Zip archive data") 
@@ -139,8 +139,8 @@ case "$ZIP_TEST" in
     print "${G}* Tips"
     print " "
     print " Please check your internet connection and try again${W}"
-    print
-    6s
+    print " "
+    sleep 6s
     return 1
     ;;
 esac
@@ -156,10 +156,18 @@ print
 print
 fi
 
-print "1.Back"
+print "${G}1.Back   ${C}2.Reboot${G}"
 print
 echo -n " Select menu : "
 read abc
+case $abc in
+2)
+reboot
+;;
+*)
+echo
+;;
+esac
 }
 download_menu(){
 	while true; do
@@ -167,28 +175,40 @@ download_menu(){
 	printmid "${C}Packages List${G}"
 	print
 	print "1.Wellbeing"
-	print "2.Youtube Vanced"
+	print "2.Vanced Manager"
 	print "3.Sound Picker"
 	print "4.Goole Play Games"
-	print "5.about"
-	print "6.Exit"
+	print "5.Carrier Service (Recomended)"
+	print "6.Google Location History (Recomended)"
+	print "7.Setup Wizard"
+	print "8.about"
+	print "9.Exit"
 	print
 	echo -n " Select List : "
 	read dmenu
 	case $dmenu in
 	1)
-	download_file Wellbeing https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/Wellbeing.tar.xz/download
+	download_file Wellbeing https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/Wellbeing.zip/download
 	;;
 	2)
-	download_file Youtube https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/YoutubeVanced.tar.xz/download
+	download_file VancedManager https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/VancedManager.zip/download
 	;;
 	3)
-	download_file SoundPicker https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/SoundPicker.tar.xz/download
+	download_file SoundPicker https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/SoundPicker.zip/download
 	;;
 	4)
-	download_file PlayGames https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/SoundPicker.tar.xz/download
+	download_file PlayGames https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/PlayGames.zip/download
 	;;
 	5)
+	download_file CarrierService https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/CarrierService.zip/download
+	;;
+	6)
+	download_file GoogleLocationHistory https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/GoogleLocationHistory.zip/download
+	;;
+	7)
+	download_file SetupWizard https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/SetupWizard.zip/download
+	;;
+	8)
 	clear
 	printmid "${C}About${G}"
 	print
@@ -205,7 +225,7 @@ download_menu(){
 	echo -n "Select Menu : "
 	read lololo
 	;;
-	6)
+	9)
 	break
 	;;
 	esac
