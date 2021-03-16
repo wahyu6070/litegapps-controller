@@ -80,7 +80,7 @@ install_package(){
 	[ ! -d $base/modules ] && mkdir -p $base/modules
 	[ -d $base/modules/$name_package_module ] && rm -rf $base/modules/$name_package_module
 	[ ! -d $base/modules/$name_package_module ] && mkdir -p $base/modules/$name_package_module
-	for move_package in litegapps-prop litegapps-list litegapps-uninstall.sh module.prop; do
+	for move_package in litegapps-prop litegapps-list litegapps-uninstall.sh litegapps-restore.sh module.prop; do
 		[ -f $base/tmp/$move_package ] && cp -pf $base/tmp/$move_package $base/modules/$name_package_module/
 	done
 	rm -rf $base/tmp
@@ -200,7 +200,7 @@ download_menu(){
 	download_file PlayGames https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/PlayGames.zip/download
 	;;
 	5)
-	download_file CarrierService https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/CarrierService.zip/download
+	download_file CarrierServices https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/CarrierService.zip/download
 	;;
 	6)
 	download_file GoogleLocationHistory https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/GoogleLocationHistory.zip/download
