@@ -169,7 +169,11 @@ echo
 ;;
 esac
 }
-download_menu(){
+
+#################################################
+#Menu functions
+#################################################
+menu_download(){
 	while true; do
 	clear
 	printmid "${C}Packages List${G}"
@@ -232,7 +236,7 @@ download_menu(){
 	done
 	
 	}
-tweaks(){
+menu_tweaks(){
 	while true; do
 	clear
 	printmid "${C}Litegapps Tweaks${G}"
@@ -279,6 +283,41 @@ tweaks(){
 	
 
 }
+
+menu_zip_install(){
+printmid "${C}Package ZIP install"
+print " "
+dirpackage=/data/media/0/Android/litegapps/package
+
+for IZIP in $(ls -1 $dirpackage); do
+	ZIP_TEST="$(file -b $dirpackage/$IZIP | head -1 | cut -d , -f 1)"
+	if [ -f $dirpackage/$IZIP ] && [ "$ZIP_TEST" = "Zip archive data" ]; then
+		install_package $dirpackage/$IZIP
+	fi
+done
+print " "
+echo -n " Select Menu : "
+read lol
+}
+
+
+menu_settings(){
+echo
+}
+menu_about(){
+	clear
+	printmid "${C}About Litegapps Menu${G}"
+	print
+	print "Litegapps Menu Version : $litegapps_menu_version ($litegapps_menu_code)"
+	print "Litegapps Menu is an additional feature of Litegapps or Litegapps++"
+	print " "
+	print "telegram channel : https://t.me/litegapps"
+	print " "
+	print "1.Back"
+	print
+	echo -n "Select Menu : "
+	read lzuz
+	}
 while true; do
 clear
 print
@@ -286,38 +325,35 @@ printmid "${C}Litegapps Menu${G}"
 print
 print "1.Download package"
 print "2.Tweaks"
-print "3.Update Litegapps menu"
-print "4.about "
-print "5.exit"
+print "3.Install ZIP package"
+print "4.Settings"
+print "5.Updater"
+print "6.about "
+print "7.exit"
 print
 echo -n "Select Menu : "
 read menu77
 	case $menu77 in
 		1)
-		download_menu
+		menu_download
 		;;
 		2)
-		tweaks
+		menu_tweaks
 		;;
 		3)
+		menu_zip_install
+		;;
+		4)
+		menu_settings
+		;;
+		5)
 		chmod 755 /data/litegapps/updater.sh
 		. /data/litegapps/updater.sh
 		;;
-		4)
-		clear
-		printmid "${C}About Litegapps Menu${G}"
-		print
-		print "Litegapps Menu Version : $litegapps_menu_version ($litegapps_menu_code)"
-		print "Litegapps Menu is an additional feature of Litegapps or Litegapps++"
-		print " "
-		print "telegram channel : https://t.me/litegapps"
-		print " "
-		print "1.Back"
-		print
-		echo -n "Select Menu : "
-		read lzuz
+		6)
+		menu_about
 		;;
-		5)
+		7)
 		break
 		;;
 		*)
@@ -326,14 +362,6 @@ read menu77
 		;;
 		esac
 done
-
-
-
-
-
-
-
-
 
 
 
