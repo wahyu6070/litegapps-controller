@@ -61,6 +61,19 @@ system=/system
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 #main func
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+menu_end(){
+	print " "
+	print "${C}1.Back     ${Y}2.Reboot"
+	print
+	print
+	echo -n " ${G}Select menu : ${V}"
+	read menu_end2
+	case $menu_end2 in
+	1) clear ;;
+	2) reboot ;;
+	*) clear ;;
+	esac
+	}
 
 install_package(){
 	input="$1"
@@ -99,9 +112,9 @@ if [ -f $base/modules/$name/litegapps-uninstall.sh ]; then
 	print "1.Install"
 	print "2.Uninstall"
 	print
-	echo -n "select menu : "
-	read aswww
-	case $aswww in
+	echo -n "${G}Select Menu :${W} "
+	read menuin
+	case $menuin in
 	1)
 	modeselect=install
 	break
@@ -156,19 +169,9 @@ print
 print
 fi
 
-print "${G}1.Back   ${C}2.Reboot${G}"
-print
-echo -n " Select menu : "
-read abc
-case $abc in
-2)
-reboot
-;;
-*)
-echo
-;;
-esac
+menu_end
 }
+
 
 #################################################
 #Menu functions
@@ -182,9 +185,9 @@ menu_download(){
 	print "2.Vanced Manager"
 	print "3.Sound Picker"
 	print "4.Goole Play Games"
-	print "5.Carrier Service (Recomended)"
-	print "6.Google Location History (Recomended)"
-	print "7.Setup Wizard"
+	print "5.Carrier Service ${Y}(Recomended)${G}"
+	print "6.Google Location History ${Y}(Recomended)${G}"
+	print "7.Setup Wizard ${R}(BETA)${G}"
 	print "8.about"
 	print "9.Exit"
 	print
@@ -224,10 +227,7 @@ menu_download(){
 	print
 	print "Report bug : https://t.me/litegapps"
 	print
-	print "1.Back"
-	print
-	echo -n "Select Menu : "
-	read lololo
+	menu_end
 	;;
 	9)
 	break
@@ -264,11 +264,7 @@ menu_tweaks(){
 				fi
 		     done
 				
-				print 
-				print "1.Back"
-				print
-				echo -n "select menu : "
-				read lul
+		     menu_end
 			;;
 		2)
 		break
@@ -280,29 +276,62 @@ menu_tweaks(){
 	esac
 	
    done
-	
-
 }
 
 menu_zip_install(){
-printmid "${C}Package ZIP install"
+clear
+printmid "${C}Package ZIP install${G}"
 print " "
 dirpackage=/data/media/0/Android/litegapps/package
-
+numzip=0
 for IZIP in $(ls -1 $dirpackage); do
 	ZIP_TEST="$(file -b $dirpackage/$IZIP | head -1 | cut -d , -f 1)"
 	if [ -f $dirpackage/$IZIP ] && [ "$ZIP_TEST" = "Zip archive data" ]; then
+		numzip2=$(((numzip+1)))
+		numzip=$numzip2
 		install_package $dirpackage/$IZIP
 	fi
 done
-print " "
-echo -n " Select Menu : "
-read lol
+print
+print "${Y} $numzip ${G}Package Installed"
+menu_end
 }
 
 
 menu_settings(){
-echo
+test ! -d /data/litegapps/config && mkdir -p /data/litegapps/config
+CONFIGDIR=/data/litegapps/config
+while true; do
+if [ -f $CONFIGDIR/backup_restore ]; then
+backup_restore="${G}1.Backup And Restore = ON${G}"
+else
+backup_restore="${G}1.Backup And Restore = ${W}OFF${G}"
+fi
+clear
+printmid "${C}Settings${G}"
+print
+print "$backup_restore"
+print "2.Exit"
+print
+echo -n "${C}Select Menu : ${G}"
+read inputsetting
+case $inputsetting in
+1)
+if [ ! -f $CONFIGDIR/backup_restore ]; then
+echo "true" > $CONFIGDIR/backup_restore
+elif [ -f $CONFIGDIR/backup_restore ]; then
+rm -rf $CONFIGDIR/backup_restore
+fi
+;;
+2)
+break
+;;
+*)
+error "Please select Menu"
+sleep 2s
+;;
+esac
+done
 }
 menu_about(){
 	clear
@@ -313,14 +342,10 @@ menu_about(){
 	print " "
 	print "telegram channel : https://t.me/litegapps"
 	print " "
-	print "1.Back"
-	print
-	echo -n "Select Menu : "
-	read lzuz
+	menu_end
 	}
 while true; do
 clear
-print
 printmid "${C}Litegapps Menu${G}"
 print
 print "1.Download package"
@@ -331,7 +356,7 @@ print "5.Updater"
 print "6.about "
 print "7.exit"
 print
-echo -n "Select Menu : "
+echo -n "Select Menu : ${V}"
 read menu77
 	case $menu77 in
 		1)
@@ -357,7 +382,7 @@ read menu77
 		break
 		;;
 		*)
-		error "please select"
+		error "please select 1-7 !"
 		sleep 2s
 		;;
 		esac

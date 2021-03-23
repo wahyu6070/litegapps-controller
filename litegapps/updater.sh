@@ -9,11 +9,21 @@ getp(){
 	grep "^$1" "$2" | head -n1 | cut -d = -f 2;
 	}
 
+G='\e[01;32m'		# GREEN TEXT
+R='\e[01;31m'		# RED TEXT
+Y='\e[01;33m'		# YELLOW TEXT
+B='\e[01;34m'		# BLUE TEXT
+V='\e[01;35m'		# VIOLET TEXT
+Bl='\e[01;30m'		# BLACK TEXT
+C='\e[01;36m'		# CYAN TEXT
+W='\e[01;37m'		# WHITE TEXT
+BGBL='\e[1;30;47m'	# Background W Text Bl
+N='\e[0m'			# How to use (example): echo "${G}example${N}"
 
 clear
-printmid "Litegapps Menu Updater"
+printmid "${C}Litegapps Menu Updater${G}"
 print
-print "- Checking Litegapps Menu"
+print "${V}- Checking Litegapps Menu${G}"
 test ! -d $based/download && mkdir -p $based/download
 $bins/curl -L -o $based/download/litegapps_menu https://raw.githubusercontent.com/wahyu6070/litegapps-controller/master/litegapps/litegapps_menu.sh 2>/dev/null
 if [ $(getp litegapps_menu_code $based/download/litegapps_menu) -gt $(getp litegapps_menu_code $based/litegapps_menu.sh) ]; then
@@ -34,7 +44,7 @@ fi
 #del $based/download/litegapps_menu
 
 
-print "- Checking Updater"
+print "${Y}- Checking Updater${G}"
 $bins/curl -L -o $based/download/updater https://raw.githubusercontent.com/wahyu6070/litegapps-controller/master/litegapps/updater.sh 2>/dev/null
 if [ $(getp updatercode $based/download/updater) -gt $(getp updatercode $based/updater.sh) ]; then
 print
@@ -56,7 +66,7 @@ del $based/download/updater
 
 print "- Done"
 print
-print "1.Exit"
+print "${C}1.Exit"
 print
-echo -n "Select Menu : "
+echo -n "${Y}Select Menu : ${V}"
 read lullll
