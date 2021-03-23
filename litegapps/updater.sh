@@ -1,4 +1,4 @@
-#litegapps control
+#litegapps controller
 #29-12-2020 - 06-03-2021
 updaterversion=1.1
 updatercode=2

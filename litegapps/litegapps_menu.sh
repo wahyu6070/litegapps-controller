@@ -1,11 +1,11 @@
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#Litegapps
+#Litegapps controller
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 #29-12-2020 16-03-2021
-litegapps_menu_version=1.1
-litegapps_menu_code=2
+litegapps_menu_version=1.3
+litegapps_menu_code=3
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 #base func
 #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
@@ -139,8 +139,8 @@ print
 [ -d $base2/download ] && rm -rf $base2/download
 test ! -d $base2/download && mkdir -p $base2/download
 print "- Download package"
-cp -pf /sdcard/asw/package/package.zip $base2/download/$name.zip
-#$bin2/curl -L -o $base2/download/$name.zip $url 2>/dev/null & spinner "- Downloading" 2>/dev/null
+#cp -pf /sdcard/asw/package/package.zip $base2/download/$name.zip
+$bin2/curl -L -o $base2/download/$name.zip $url 2>/dev/null & spinner "- Downloading" 2>/dev/null
 ZIP_TEST="$(file -b $base2/download/$name.zip | head -1 | cut -d , -f 1)"
 case "$ZIP_TEST" in
     "Zip archive data") 
