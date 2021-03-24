@@ -191,7 +191,7 @@ menu_download(){
 	print "8.about"
 	print "9.Exit"
 	print
-	echo -n " Select List : "
+	echo -n " Select List Menu : ${V}"
 	read dmenu
 	case $dmenu in
 	1)
@@ -207,7 +207,7 @@ menu_download(){
 	download_file PlayGames https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/PlayGames.zip/download
 	;;
 	5)
-	download_file CarrierServices https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/CarrierService.zip/download
+	download_file CarrierServices https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/CarrierServices.zip/download
 	;;
 	6)
 	download_file GoogleLocationHistory https://sourceforge.net/projects/litegapps/files/database/$ARCH/$SDK/GoogleLocationHistory.zip/download
@@ -221,11 +221,11 @@ menu_download(){
 	print
 	print "This is a tool to download manual Litegapps packages."
 	print
-	print "Problem solving : "
+	printmid "${Y}Problem Solving${W}"
 	print "1.make sure you have a good internet connection"
-	print "2.make sure you are using the latest version of litegapps control"
+	print "2.make sure you are using the latest version of litegapps controller"
 	print
-	print "Report bug : https://t.me/litegapps"
+	print "${C}Report bug : https://t.me/litegapps${C}"
 	print
 	menu_end
 	;;
@@ -340,7 +340,23 @@ menu_about(){
 	print "Litegapps Menu Version : $litegapps_menu_version ($litegapps_menu_code)"
 	print "Litegapps Menu is an additional feature of Litegapps or Litegapps++"
 	print " "
-	print "telegram channel : https://t.me/litegapps"
+	print "Telegram channel : https://t.me/litegapps"
+	print " "
+	print
+	printmid "${Y}Download Package${W}"
+	print " "
+	print " "
+	printmid "${Y}Tweaks${G}"
+	print ""
+	print " "
+	printmid "${Y}Install ZIP Packages${W}"
+	print " You can install even more than one zip package!  offline.  put package.zip into /sdcard/Android/litegapps/package"
+	print " "
+	printmid "${Y}Settings${G}"
+	print "Settings "
+	print " "
+	printmid "${Y}Updater${W}"
+	print " "
 	print " "
 	menu_end
 	}
@@ -350,7 +366,7 @@ printmid "${C}Litegapps Menu${G}"
 print
 print "1.Download package"
 print "2.Tweaks"
-print "3.Install ZIP package"
+print "3.Install ZIP packages"
 print "4.Settings"
 print "5.Updater"
 print "6.about "
